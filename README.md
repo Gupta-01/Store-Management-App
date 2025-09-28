@@ -1,145 +1,124 @@
-⭐ FullStack Intern Coding Challenge
-📌 Overview
+# ⭐ FullStack Intern Coding Challenge  
 
-This project is a role-based web application that enables users to rate stores on the platform. The system supports three types of users:
+## 📌 Overview  
+This is a **role-based web application** for store ratings. Users can rate stores (1–5), while admins and store owners have different privileges.  
 
-System Administrator – manages users, stores, and ratings.
+**Tech Stack**:  
+- **Frontend:** React.js  
+- **Backend:** Express.js / NestJS / Loopback  
+- **Database:** PostgreSQL / MySQL  
 
-Normal User – can register, log in, view stores, and submit/modify ratings.
+---
 
-Store Owner – can log in, manage their profile, and view ratings for their store.
+## 🚀 Features  
 
-The application is built with:
+### 🔑 Authentication  
+- Role-based login system (Admin, Normal User, Store Owner).  
+- Secure password hashing + JWT authentication.  
 
-Frontend: React.js
+### 👨‍💻 System Administrator  
+- Add new stores, users (normal/admin).  
+- Dashboard with: total users, total stores, total ratings.  
+- Manage users (Name, Email, Address, Role).  
+- Manage stores (Name, Email, Address, Rating).  
+- Search/filter/sort users & stores.  
+- View detailed user info.  
 
-Backend: Express.js / Loopback / NestJS (choose one)
+### 👥 Normal User  
+- Sign up & log in.  
+- Update password.  
+- Browse/search stores.  
+- Submit or update ratings (1–5).  
+- View overall store ratings & their submitted rating.  
 
-Database: PostgreSQL / MySQL
+### 🏪 Store Owner  
+- Log in & update password.  
+- Dashboard: list of users who rated their store, average rating.  
 
-⚙️ Features
-🔑 Authentication & Authorization
+---
 
-Role-based login system (Admin, Normal User, Store Owner).
+## ✅ Validations  
+- **Name:** 20–60 chars  
+- **Address:** ≤ 400 chars  
+- **Password:** 8–16 chars, must include 1 uppercase + 1 special character  
+- **Email:** valid email format  
 
-User signup and login functionality.
+---
 
-Secure password storage with validations.
+## 📊 Database Schema  
 
-👨‍💻 System Administrator
+### `users`  
+| Field     | Type      | Constraints |
+|-----------|----------|-------------|
+| id        | INT (PK) | AUTO_INCREMENT |
+| name      | VARCHAR  | NOT NULL, 20–60 chars |
+| email     | VARCHAR  | UNIQUE, NOT NULL |
+| password  | VARCHAR  | Hashed, NOT NULL |
+| address   | VARCHAR  | ≤ 400 chars |
+| role      | ENUM     | ('ADMIN', 'USER', 'OWNER') |
 
-Add new stores, normal users, and admin users.
+### `stores`  
+| Field     | Type      | Constraints |
+|-----------|----------|-------------|
+| id        | INT (PK) | AUTO_INCREMENT |
+| name      | VARCHAR  | NOT NULL |
+| email     | VARCHAR  | UNIQUE, NOT NULL |
+| address   | VARCHAR  | NOT NULL |
+| owner_id  | INT (FK) | REFERENCES users(id) |
 
-Dashboard with:
+### `ratings`  
+| Field     | Type      | Constraints |
+|-----------|----------|-------------|
+| id        | INT (PK) | AUTO_INCREMENT |
+| user_id   | INT (FK) | REFERENCES users(id) |
+| store_id  | INT (FK) | REFERENCES stores(id) |
+| rating    | INT      | CHECK (1–5) |
 
-Total number of users
+---
 
-Total number of stores
+## ⚙️ Setup Instructions  
 
-Total number of submitted ratings
-
-Manage users (Name, Email, Password, Address, Role).
-
-Manage stores (Name, Email, Address, Overall Rating).
-
-Search and filter by Name, Email, Address, and Role.
-
-View detailed user info (with store rating if Store Owner).
-
-👥 Normal User
-
-Sign up (Name, Email, Address, Password).
-
-Update password.
-
-Browse and search stores by Name and Address.
-
-Store listing includes:
-
-Store Name
-
-Address
-
-Overall Rating
-
-User’s Submitted Rating
-
-Submit and update ratings (1–5).
-
-🏪 Store Owner
-
-Log in and update password.
-
-Dashboard includes:
-
-List of users who submitted ratings for their store
-
-Average store rating
-
-✅ Validations
-
-Name: Min 20, Max 60 characters
-
-Address: Max 400 characters
-
-Password: 8–16 characters, at least 1 uppercase & 1 special character
-
-Email: Standard email validation
-
-📊 Database Schema (Suggested)
-Users Table
-Field	Type	Constraints
-id	INT (PK)	AUTO_INCREMENT
-name	VARCHAR	NOT NULL, 20–60 chars
-email	VARCHAR	UNIQUE, NOT NULL
-password	VARCHAR	Encrypted, NOT NULL
-address	VARCHAR	Max 400 chars
-role	ENUM	(‘ADMIN’, ‘USER’, ‘OWNER’)
-Stores Table
-Field	Type	Constraints
-id	INT (PK)	AUTO_INCREMENT
-name	VARCHAR	NOT NULL
-email	VARCHAR	UNIQUE, NOT NULL
-address	VARCHAR	NOT NULL
-owner_id	INT (FK)	REFERENCES users(id)
-Ratings Table
-Field	Type	Constraints
-id	INT (PK)	AUTO_INCREMENT
-user_id	INT (FK)	REFERENCES users(id)
-store_id	INT (FK)	REFERENCES stores(id)
-rating	INT	CHECK (1–5)
-🚀 Installation & Setup
-1️⃣ Clone Repository
+### 1️⃣ Clone Repo  
+```bash
 git clone https://github.com/your-username/fullstack-intern-challenge.git
 cd fullstack-intern-challenge
+```
 
-2️⃣ Backend Setup
+### 2️⃣ Backend Setup  
+```bash
 cd backend
 npm install
+```
 
-
-Configure .env file with:
-
+Create `.env` file:  
+```env
 PORT=5000
 DB_HOST=localhost
 DB_PORT=5432
 DB_USER=your_db_user
 DB_PASSWORD=your_db_password
 DB_NAME=your_db_name
-JWT_SECRET=your_jwt_secret
+JWT_SECRET=your_secret_key
+```
 
-
-Run migrations & start server:
-
+Run migrations & start server:  
+```bash
 npm run migrate
 npm run dev
+```
 
-3️⃣ Frontend Setup
+### 3️⃣ Frontend Setup  
+```bash
 cd frontend
 npm install
 npm start
+```
 
-📂 Project Structure (Suggested)
+---
+
+## 📂 Project Structure  
+
+```
 fullstack-intern-challenge/
 │── backend/
 │   ├── src/
@@ -161,27 +140,29 @@ fullstack-intern-challenge/
 │   └── package.json
 │
 └── README.md
+```
 
-🛠 Best Practices Followed
+---
 
-JWT-based authentication for secure login.
+## 🛠 Best Practices  
+✔️ RESTful APIs with proper error handling  
+✔️ JWT-based authentication  
+✔️ Password hashing with bcrypt  
+✔️ Sorting, filtering, pagination  
+✔️ Responsive UI with form validation  
+✔️ Modular & clean code structure  
 
-Password hashing with bcrypt.
+---
 
-RESTful APIs with proper error handling.
+## 📌 Future Improvements  
+- ✅ Add unit & integration tests  
+- ✅ Deploy to cloud (Vercel/Netlify + Render/Heroku)  
+- ✅ Add analytics for dashboards  
+- ✅ Implement CI/CD pipeline  
 
-Pagination, sorting, and filtering on listings.
+---
 
-Responsive UI with form validations.
-
-Clean code with modular structure.
-
-📌 Future Enhancements
-
-Add role-based dashboards with analytics.
-
-Implement unit & integration tests.
-
-Deploy on cloud (Heroku/Render + Vercel/Netlify).
-
-Add CI/CD pipeline for automated deployment.
+## 👨‍💻 Author  
+**Your Name**  
+- GitHub: [@your-username](https://github.com/your-username)  
+- LinkedIn: [Your LinkedIn](https://linkedin.com/in/your-profile)  
