@@ -78,6 +78,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "ratings_store_id_fkey"
+            columns: ["store_id"]
+            isOneToOne: false
+            referencedRelation: "stores_public"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "ratings_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
@@ -132,7 +139,36 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      stores_public: {
+        Row: {
+          address: string | null
+          average_rating: number | null
+          created_at: string | null
+          id: string | null
+          name: string | null
+          total_ratings: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          address?: string | null
+          average_rating?: number | null
+          created_at?: string | null
+          id?: string | null
+          name?: string | null
+          total_ratings?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          address?: string | null
+          average_rating?: number | null
+          created_at?: string | null
+          id?: string | null
+          name?: string | null
+          total_ratings?: number | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       get_dashboard_stats: {
