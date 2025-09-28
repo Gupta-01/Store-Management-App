@@ -1,73 +1,187 @@
-# Welcome to your Lovable project
+⭐ FullStack Intern Coding Challenge
+📌 Overview
 
-## Project info
+This project is a role-based web application that enables users to rate stores on the platform. The system supports three types of users:
 
-**URL**: https://lovable.dev/projects/02e3a08b-cc24-454f-b91c-bd4d91dcc053
+System Administrator – manages users, stores, and ratings.
 
-## How can I edit this code?
+Normal User – can register, log in, view stores, and submit/modify ratings.
 
-There are several ways of editing your application.
+Store Owner – can log in, manage their profile, and view ratings for their store.
 
-**Use Lovable**
+The application is built with:
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/02e3a08b-cc24-454f-b91c-bd4d91dcc053) and start prompting.
+Frontend: React.js
 
-Changes made via Lovable will be committed automatically to this repo.
+Backend: Express.js / Loopback / NestJS (choose one)
 
-**Use your preferred IDE**
+Database: PostgreSQL / MySQL
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+⚙️ Features
+🔑 Authentication & Authorization
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+Role-based login system (Admin, Normal User, Store Owner).
 
-Follow these steps:
+User signup and login functionality.
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+Secure password storage with validations.
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+👨‍💻 System Administrator
 
-# Step 3: Install the necessary dependencies.
-npm i
+Add new stores, normal users, and admin users.
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+Dashboard with:
+
+Total number of users
+
+Total number of stores
+
+Total number of submitted ratings
+
+Manage users (Name, Email, Password, Address, Role).
+
+Manage stores (Name, Email, Address, Overall Rating).
+
+Search and filter by Name, Email, Address, and Role.
+
+View detailed user info (with store rating if Store Owner).
+
+👥 Normal User
+
+Sign up (Name, Email, Address, Password).
+
+Update password.
+
+Browse and search stores by Name and Address.
+
+Store listing includes:
+
+Store Name
+
+Address
+
+Overall Rating
+
+User’s Submitted Rating
+
+Submit and update ratings (1–5).
+
+🏪 Store Owner
+
+Log in and update password.
+
+Dashboard includes:
+
+List of users who submitted ratings for their store
+
+Average store rating
+
+✅ Validations
+
+Name: Min 20, Max 60 characters
+
+Address: Max 400 characters
+
+Password: 8–16 characters, at least 1 uppercase & 1 special character
+
+Email: Standard email validation
+
+📊 Database Schema (Suggested)
+Users Table
+Field	Type	Constraints
+id	INT (PK)	AUTO_INCREMENT
+name	VARCHAR	NOT NULL, 20–60 chars
+email	VARCHAR	UNIQUE, NOT NULL
+password	VARCHAR	Encrypted, NOT NULL
+address	VARCHAR	Max 400 chars
+role	ENUM	(‘ADMIN’, ‘USER’, ‘OWNER’)
+Stores Table
+Field	Type	Constraints
+id	INT (PK)	AUTO_INCREMENT
+name	VARCHAR	NOT NULL
+email	VARCHAR	UNIQUE, NOT NULL
+address	VARCHAR	NOT NULL
+owner_id	INT (FK)	REFERENCES users(id)
+Ratings Table
+Field	Type	Constraints
+id	INT (PK)	AUTO_INCREMENT
+user_id	INT (FK)	REFERENCES users(id)
+store_id	INT (FK)	REFERENCES stores(id)
+rating	INT	CHECK (1–5)
+🚀 Installation & Setup
+1️⃣ Clone Repository
+git clone https://github.com/your-username/fullstack-intern-challenge.git
+cd fullstack-intern-challenge
+
+2️⃣ Backend Setup
+cd backend
+npm install
+
+
+Configure .env file with:
+
+PORT=5000
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=your_db_user
+DB_PASSWORD=your_db_password
+DB_NAME=your_db_name
+JWT_SECRET=your_jwt_secret
+
+
+Run migrations & start server:
+
+npm run migrate
 npm run dev
-```
 
-**Edit a file directly in GitHub**
+3️⃣ Frontend Setup
+cd frontend
+npm install
+npm start
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+📂 Project Structure (Suggested)
+fullstack-intern-challenge/
+│── backend/
+│   ├── src/
+│   │   ├── controllers/
+│   │   ├── models/
+│   │   ├── routes/
+│   │   ├── middlewares/
+│   │   └── utils/
+│   ├── .env
+│   └── package.json
+│
+│── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   └── utils/
+│   ├── public/
+│   └── package.json
+│
+└── README.md
 
-**Use GitHub Codespaces**
+🛠 Best Practices Followed
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+JWT-based authentication for secure login.
 
-## What technologies are used for this project?
+Password hashing with bcrypt.
 
-This project is built with:
+RESTful APIs with proper error handling.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Pagination, sorting, and filtering on listings.
 
-## How can I deploy this project?
+Responsive UI with form validations.
 
-Simply open [Lovable](https://lovable.dev/projects/02e3a08b-cc24-454f-b91c-bd4d91dcc053) and click on Share -> Publish.
+Clean code with modular structure.
 
-## Can I connect a custom domain to my Lovable project?
+📌 Future Enhancements
 
-Yes, you can!
+Add role-based dashboards with analytics.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+Implement unit & integration tests.
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Deploy on cloud (Heroku/Render + Vercel/Netlify).
+
+Add CI/CD pipeline for automated deployment.
